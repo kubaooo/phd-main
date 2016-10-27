@@ -1,0 +1,45 @@
+\documentclass[a4paper,12pt,twoside]{report}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+
+\include{thesis.preamble}
+
+
+\begin{document}
+
+\title{\LARGE {\bf Metody stochastycznego modelowania drganiowych szereg\'{o}w czasowych w zastosowaniu do detekcji uszkodze\'{n} lokalnych g\'{o}rniczych maszyn wirnikowych \\Vibration time series stochastic modeling methods with application to local damage detection in mining rotating machinery}\\
+ \vspace*{6mm}
+}
+
+\author{Jakub Obuchowski}
+\submitdate{June 2016}
+
+\normallinespacing
+\maketitle
+
+\preface
+\input{abstract/abstract}
+\input{acknowledgements/acknowledgements}
+\input{dedication/dedication}
+\input{quotes/quotes}
+
+\body
+\input{introduction/introduction}
+\input{background/background}
+\input{lit_review/lit_review}
+\input{methodology/methodology}
+\input{analyzed_data/analyzed_data}
+\input{results/results}
+
+% body of thesis comes here
+
+\input{conclusion/conclusion}
+
+\appendix
+% appendices come here
+
+
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{abbrv}
+\bibliography{bibliography/bibliography,bibliography/filtering,bibliography/par,bibliography/selection,bibliography/tf_enh,bibliography/twostage,bibliography/equalization}
+
+\end{document}

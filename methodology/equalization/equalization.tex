@@ -1,0 +1,63 @@
+\section{Blind equalization}\label{methodology_equalization}
+Consider an input signal $\varepsilon,\,n=1,\ldots,N$ (raw vibration signal). The classical version of the minimum entropy deconvolution is based on searching for coefficients $f_l,\, l=1,\ldots,L$ of a filter which maximizes the following objective function of the filter's output $y_n$~\cite{Wiggins197821}:
+\begin{equation}
+O_4\left(f\left[l\right]\right)=\frac{\sum\limits_{n=1}^{N} y^4[n]}{\left[\sum\limits_{n=1}^{N} y^2[n]\right]^2},
+\label{equalization_KURTOSIScriterion}
+\end{equation}
+where $y_n=\sum\limits_{l=1}^{L} f[l]\varepsilon [n-l]$. Optimal coefficients of the filter are calculated by solving
+\begin{equation}
+\frac{\partial \left(O_4\left(f\left[l\right]\right)\right)}{\partial \left(f[l]\right)}=0.
+\label{equalization_derivative_zero}
+\end{equation}
+Since $\frac{\partial y[n]}{\partial f[l]}=\varepsilon[n-l]$, Eq.~(\ref{equalization_derivative_zero}) can be rewritten as:
+\begin{equation}
+\frac{\sum\limits_{n=1}^{N} y^2[n]}{\sum\limits_{n=1}^{N} y^4[n]}\sum\limits_{n=1}^{N} y^3[n]\varepsilon[n-l]=\sum\limits_{p=1}^{L} f[p] \sum\limits_{n=1}^{N} \varepsilon[n-p]\varepsilon[n-l].
+\label{equalization_derivative_final_kurtosis}
+\end{equation}
+Denoting the left side of Eq.~(\ref{equalization_derivative_final_kurtosis}) as $b$ (cross correlation of the input and the output cubed) and the right side of Eq.~(\ref{equalization_derivative_final_kurtosis}) as multiplication of the vector $f$ and the Toeplitz autocorrelation matrix $A$, Eq.~(\ref{equalization_derivative_final_kurtosis}) can be expressed as $b=fA$ (matrix form of Eq.~(\ref{equalization_derivative_final_kurtosis})). This system might be solved iteratively. A clear description of the iterative procedure might be found in~\cite{Wiggins197821,Endo2007906}. In the literature one can find many different criteria that define the moment to stop iterations. For instance, the iterative procedure might be stopped while a minimum change in objective function of the filter's output is reached~\cite{McDonald2012237}, while correlation coefficient between outputs related to two following iterations is close enough to 1~\cite{Broadhead2000885} or while difference between filter coefficients related to two following iterations is small enough~\cite{Endo2007906}. In this paper we analyze behavior of several stopping criteria through a fixed number of iterations.\\
+The combined skewness-kurtosis criterion that we analyze in this paper is based on the Jarque-Bera (JB) statistic. The JB statistic calculated for the output signal $y_n,\,n=1,\ldots,N$ is defined as~\cite{Jarque1980255}:
+\begin{eqnarray}\label{equalization_eq:4}
+JB(y)=\frac{N}{6}\left(S(y)^2+\frac{\left(K(y)-3\right)^2}{4}\right),
+\end{eqnarray}
+where $S(y)$ and $K(y)$ are the skewness and kurtosis of the output, respectively. The JB statistic is sensitive to both skewness and excess kurtosis - any deviation from zero skewness and zero excess kurtosis increases the JB statistic. Such statistical properties are profitable especially when the blind equalization algorithm with JB statistic as the cost function is applied to a vibration signal which is leptokurtic, skew or both. The JB statistic is a special case of the LM (Lagrange multiplier) statistic used in the so-called “score test”, known also as the Lagrange multiplier test. The score test can be used for testing a general class of distributions with given density function. Under the $H_0$ hypothesis, namely the vector of observations constitutes sample from some specific distribution, the LM statistic has asymptotically $\chi ^2$ distribution with $r$ degrees of freedom ($r$ - number of parameters of this distribution). The JB statistic is a particular case of LM statistic for Gaussian distribution. In our case the asymptotic distribution of JB defined as in Eq.~(\ref{equalization_eq:4}) is $\chi ^2$ with 2 degrees of freedom (as the number of parameters in Gaussian distribution).  It is worth mentioning that the test based on skewness and kurtosis is locally most powerful when the test statistic has form as in Eq.~(\ref{equalization_eq:4}). For more details see~\cite{Jarque1987163}. The asymptotic distribution of JB statistic (defined as in Eq.~(\ref{equalization_eq:4})) is also discussed in~\cite{Bai200549}.\\
+On the basis of the JB statistic we propose the following objective function for blind equalization algorithm:
+\begin{equation}
+O_{JB}\left(f\left[l\right]\right)=\left(\frac{\frac{1}{N}\sum\limits_{n=1}^{N} y^3[n]}{\left[\frac{1}{N}\sum\limits_{n=1}^{N} y^2[n]\right]^{\frac{3}{2}}}\right)^2 + \frac{1}{4}\left(\frac{\frac{1}{N}\sum\limits_{n=1}^{N} y^4[n]}{\left[\frac{1}{N}\sum\limits_{n=1}^{N} y^2[n]\right]^2}-3\right)^2.
+\label{equalization_JBcriterion}
+\end{equation}
+Calculating $f$ for which:
+\begin{equation}
+\frac{\partial \left(O_{JB}\left(f\left[l\right]\right)\right)}{\partial \left(f[l]\right)}=0
+\label{equalization_derivative_zero_JB}
+\end{equation}
+one can obtain filter coefficients for which the optimization criterion defined in Eq.~(\ref{equalization_JBcriterion}) is maximized.\\
+Thus, the analogous formula to Eq.~(\ref{equalization_derivative_final_kurtosis}) is:
+\begin{equation}
+\frac{C_{1}\sum\limits_{n=1}^{N} y^2[n]\varepsilon[n-l]+C_{2}\sum\limits_{n=1}^{N} y^3[n]\varepsilon[n-l]}{C_3} = \sum\limits_{p=1}^{L} f[p] \sum\limits_{n=1}^{N} \varepsilon[n-p]\varepsilon[n-l],
+\label{equalization_derivative_final_JB}
+\end{equation}
+where:
+\begin{equation}
+\begin{split}
+C_1& =3\frac{1}{N}\sum\limits_{n=1}^{N} y^3 \left(\frac{1}{N}\sum\limits_{n=1}^{N} y^2\right)^2\\
+C_2& =\frac{1}{N}\sum\limits_{n=1}^{N} y^4 \frac{1}{N}\sum\limits_{n=1}^{N} y^2-3\left(\frac{1}{N}\sum\limits_{n=1}^{N} y^2\right)^3\\
+C_3& =3\left(\frac{1}{N}\sum\limits_{n=1}^{N} y^3\right)^2 \frac{1}{N}\sum\limits_{n=1}^{N} y^2-3\frac{1}{N}\sum\limits_{n=1}^{N} y^4 \left(\frac{1}{N}\sum\limits_{n=1}^{N} y^2\right)^2.
+\end{split}\label{equalization_derivative_final_const}
+\end{equation}
+Similarly as in Eq.~(\ref{equalization_derivative_final_kurtosis}), the left side of Eq.~(\ref{equalization_derivative_final_JB}) consists of weighted cross correlations and the right side is a multiplication of  the vector $f$ and the Toeplitz autocorrelation matrix $A$. The filter $f$ has to be normalized (by its Euclidean norm) in every iteration to control energy of the filter's output, thus Eq.~(\ref{equalization_derivative_final_JB}) can be simplified. i.e. dividing by $C_3$ is not necessary. $\frac{1}{N}\sum\limits_{n=1}^{N} y^k$ is the $k$-th order moment and $\sum\limits_{n=1}^{N} y^k[n]\varepsilon[n-l]$ is the cross correlation of the input and the output to the power $k$. Eq.~(\ref{equalization_derivative_final_JB}) might be solved for $f$ using the standard iterative algorithm described in~\cite{Wiggins197821}. As it is mentioned in~\cite{Ooe1979458}, the recommended way of calculating cross correlations is based on the Wiener-Khinchin theorem, i.e. using the Fast Fourier Transform (FFT) and its inverse (IFFT). Benefits from using FFT and IFFT are clearly perceptible when the order of the filter is large and the input signal is long.\\
+In order to provide comprehensive analysis, we compare the results obtained using kurtosis and JB statistic as criteria with the blind deconvolution driven by one of Gray's variability norms, that incorporates normalized third statistical moment (skewness). The objective function is defined as~\cite{Gray1979}:
+\begin{equation}
+O_3\left(f\left[l\right]\right)=\frac{\sum\limits_{n=1}^{N} y^3[n]}{\left[\sum\limits_{n=1}^{N} y^2[n]\right]^\frac{3}{2}},
+\label{equalization_SKEWNESScriterion}
+\end{equation}
+where $y_n=\sum\limits_{l=1}^{L} f[l]\varepsilon [n-l]$. Optimal coefficients of the filter are calculated by solving
+\begin{equation}
+\frac{\partial \left(O_3\left(f\left[l\right]\right)\right)}{\partial \left(f[l]\right)}=0.
+\label{equalization_derivative_zeroSKEW}
+\end{equation}
+Eq.~(\ref{equalization_derivative_zeroSKEW}) can be rewritten as:
+\begin{equation}
+\frac{\sum\limits_{n=1}^{N} y^2[n]}{\sum\limits_{n=1}^{N} \left| y\right|^3[n]}\sum\limits_{n=1}^{N}\left|y\right|^3[n]\varepsilon[n-l]=\sum\limits_{p=1}^{L} f[p] \sum\limits_{n=1}^{N} \varepsilon[n-p]\varepsilon[n-l].
+\label{equalization_derivative_final_SKEW}
+\end{equation}
+The left side of Eq.~(\ref{equalization_derivative_final_SKEW}) consists of weighted cross correlation and the right side is a multiplication of  the vector $f$ and the Toeplitz autocorrelation matrix $A$. The iterative algorithm mentioned earlier solves Eq.~(\ref{equalization_derivative_final_SKEW}) for $f$.

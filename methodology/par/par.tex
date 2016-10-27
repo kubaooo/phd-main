@@ -1,0 +1,27 @@
+\section{Periodic autoregressive model for cyclic load of bucket wheel excavator}\label{methodology_par}
+
+\subsection{Influence of non-Gaussian noise to PAR estimation}
+
+The signals analyzed in this section is represent vibration acceleration of a planetary gearbox used in a bucket wheel excavator~\cite{dybala2014empirical}. - \hl{NO TO TRZEBA JAKOS INACZEJ UJAC} Such vibration signal might be simulated as a sum of several sinusoidal components with frequencies that meet the gear mesh frequency and its harmonics and a white noise. Due to the cyclic regime in which the excavator operates, the sinusoidal components are frequency and amplitude  modulated with the period corresponding to the period of the bucket wheel operation~\cite{Chaari2012635}. Due to industrial environment, we decided to analyze white noises that follow the double Pareto distribution with parameters $\alpha_1=1.5$ (denoted later as Pareto1.5) and $\alpha_2=3.6$ (denoted as Pareto3.6) and compare result with the Gaussian case. Let us point out for $\alpha_2$ the examined Pareto distribution have finite second moment while for $\alpha_1$ the second moment does not exists. This fact has important influence for the results.\\
+Influence of non-Gaussian noise to PAR estimation is performed using the following algorithm. At first, a lot of signals related to each type of noise are simulated to preserve reliability of results. Energy of each noise sequence is normalized, i.e. time series are divided by its standard deviation to preserve fair comparison. Secondly, parameters of the PAR models are estimated for each signal. The procedure of estimation is based on the Yule-Walker method and is described in~\cite{Wylomanska2014171}. Order of the PAR model is chosen as 15 for every signal. This choice is motivated by the number of sinusoidal components and the fact, that the residual time series are satisfactory~\cite{Wylomanska2014171}. After that, we analyze amplitude response of the models at each $1\leq t \leq T$, namely a surface of amplitude response. It is a natural extension of the amplitude response of an autoregressive model. The autoregressive model (AR) of order $p$ and parameters $a=(a_i)_{i=1,\ldots,p}$ is defined as follows:
+\begin{eqnarray}
+X(t)-\sum^{p}_{i=1}a_i X(t-i)=Z(t),
+\end{eqnarray}
+where the sequence ${Z(t)}$ is a white noise time series.\\
+Amplitude response of an autoregressive model with coefficients $a=(a_i)_{i=1,\ldots,p}$ is defined as follows:
+\begin{eqnarray}
+S(f)=\left|\frac{1}{FT(a)}\right|,
+\end{eqnarray}
+where $FT(a)$ is the discrete Fourier transform (DFT) of $a=(a_i)_{i=1,\ldots,p}$. The amplitude response of an autoregressive model is a tool used for interpretation of its coefficients. It illustrates how the model applied to an input signal increases amplitudes of input’s spectral components. For an autoregressive model with time-varying coefficients a natural extension of the amplitude response is a surface of amplitude response. Therefore it depends not only on the frequency $f$, but on the time instance $t$, as well. Thus, the surface of amplitude response is defined as:
+\begin{eqnarray}
+S(t,f)=\left|\frac{1}{FT\left(a(t)\right)}\right|,
+\end{eqnarray}
+Interpretation of the surface of amplitude response is similar to the classical, one dimensional amplitude response, i.e. $S(t,f)$ describes how the model applied to an input signal increases amplitudes of input's spectral components at the time instance $t$.\\
+In order to examine influence of the considered distribution to PAR model estimation we calculate the mean square error (MSE) between estimated amplitude response and so called "perfect surface", described in \hl{Sec. 4.2}. To preserve fair results, every surface (estimated and "perfect") is normalized by its average value, i.e. arithmetic mean of the whole surface is subtracted from the surface. Higher MSE means that the procedure gives worse results in the considered case.
+\FloatBarrier
+
+\subsection{Influence  to PAR estimation for different number of period repetitions}
+
+In this section we analyze influence of the number of period repetitions on PAR parameters estimation procedure. Such analysis is motivated by the question how long the data acquisition should be to ensure appropriate results using the PAR model. In order to examine influence of different number of period replications we analyze MSE between PAR parameters ${a_i(t)}_i=1,\ldots,p,\, t=1,\ldots,T$ estimated from the noiseless signals and corresponding noisy signals of different numbers of period repetitions. The minimum number of period repetitions is set to 3 and the maximum - to 18. We compare boxplots and medians to clearly see how the estimation procedure is influenced by the number of period repetitions.
+
+\FloatBarrier
